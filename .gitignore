@@ -1,0 +1,8 @@
+node_modules
+.output
+dist
+.tanstack
+.nitro
+.vinxi
+.DS_Store
+*.local

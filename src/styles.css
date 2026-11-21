@@ -1,0 +1,27 @@
+@import 'tailwindcss';
+
+/* Tokens de marca Lexa Snow & Stay (ver identidad-web-lexa.html) */
+@theme {
+  --color-nieve: #ffffff;
+  --color-crema: #f7f1e7;
+  --color-glaciar: #accbdd;
+  --color-pizarra: #414951;
+  --color-accion: #2f5b78;
+  --color-accion-hover: #244861;
+  --color-lago: #3d6e8c;
+  --color-piedra: #62686f;
+  --color-lino: #efe6d6;
+  --color-escarcha: #e2ddd2;
+  --color-pino: #2e6b4e;
+  --color-alerta: #a3262a;
+
+  --font-serif: 'Marcellus', Georgia, serif;
+  --font-sans: 'Mulish', system-ui, sans-serif;
+}
+
+html {
+  font-family: var(--font-sans);
+  color: var(--color-pizarra);
+  background: var(--color-nieve);
+  -webkit-font-smoothing: antialiased;
+}
