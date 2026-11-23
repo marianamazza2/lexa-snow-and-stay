@@ -36,7 +36,7 @@ export function ParallaxImage({
   return (
     <motion.div
       ref={ref}
-      className={cn('relative overflow-hidden', className)}
+      className={cn('relative isolate overflow-hidden rounded-media', className)}
       initial="hidden"
       whileInView="shown"
       viewport={{ once: true, amount: 0.2 }}

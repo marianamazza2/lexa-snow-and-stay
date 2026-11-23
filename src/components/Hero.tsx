@@ -8,16 +8,19 @@ const heroImage = '/images/hero-sierra-nevada-3.webp'
 
 const delay = (d: number) => ({ '--d': `${d}s` }) as CSSProperties
 
+// Dato de ambiente para la línea superior (Pradollano). TODO: confirmar con la clienta.
+const coordinates = '37°05′ N — 3°23′ O · 2.100 m'
+
 /**
- * Portada: foto a sangre, titular, texto y dos llamadas a la acción.
- * Las entradas se animan con CSS (funcionan antes de que cargue el JavaScript)
- * y nada se mueve al hacer scroll.
+ * Portada editorial: foto a sangre, titular muy grande y, abajo, una franja con
+ * el texto, los accesos a Dormir y Aprender y el botón de reserva.
+ * Las entradas se animan con CSS (funcionan antes de que cargue el JavaScript).
  */
 export function Hero() {
   return (
     <section
       id="inicio"
-      className="relative isolate flex h-svh min-h-[560px] items-center overflow-hidden text-nieve"
+      className="relative isolate flex h-svh min-h-[640px] flex-col overflow-hidden text-nieve"
     >
       <img
         src={heroImage}
@@ -25,71 +28,86 @@ export function Hero() {
         height={1024}
         alt="Pistas y telecabinas de la estación de Sierra Nevada en un día soleado"
         fetchPriority="high"
-        // En escritorio la imagen es un 18 % más ancha que la portada y se ancla a la
-        // izquierda, así queda desplazada hacia la derecha.
-        className="hero-settle absolute inset-0 -z-10 size-full origin-top object-cover object-[58%_48%] sm:w-[118%] sm:max-w-none sm:object-[0%_48%]"
+        className="hero-settle absolute inset-0 -z-10 size-full object-cover object-[62%_center] sm:object-[center_40%]"
       />
-      {/* Velos para asegurar la lectura del texto y de la navbar */}
-      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-b from-[#1c3549]/30 via-transparent via-25% to-transparent" />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(28,53,73,0.68)_0%,rgba(28,53,73,0.55)_28%,rgba(28,53,73,0.2)_50%,rgba(28,53,73,0)_62%)]" />
-      {/* Velo diagonal desde la esquina inferior derecha: cubre torres y telecabinas
-          y se desvanece hacia el centro, que queda como la zona más luminosa */}
-      <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_130%_at_100%_100%,rgba(28,53,73,0.88)_0%,rgba(28,53,73,0.7)_35%,rgba(28,53,73,0.38)_65%,rgba(28,53,73,0)_100%)]" />
-      {/* Velo difuso centrado en el texto. Ocupa toda la portada para que el degradado
-          se desvanezca sin bordes ni líneas visibles */}
-      <div aria-hidden className="absolute inset-0 -z-10 hidden bg-[radial-gradient(ellipse_55%_70%_at_18%_58%,rgba(28,53,73,0.6)_0%,rgba(28,53,73,0.35)_40%,rgba(28,53,73,0)_100%)] sm:block" />
-      {/* En móvil el texto ocupa todo el ancho: velo uniforme algo más marcado */}
-      <div aria-hidden className="absolute inset-0 -z-10 bg-[#1c3549]/50 sm:hidden" />
+      {/* Velos en azul de la marca: arriba para la navbar, abajo para el texto.
+          El centro queda limpio para que la nieve se vea blanca */}
+      <div aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(36,72,97,0.5)_0%,rgba(36,72,97,0)_28%,rgba(36,72,97,0)_42%,rgba(36,72,97,0.9)_100%)]" />
 
-      <div className="shell pt-16 [text-shadow:0_1px_14px_rgba(28,53,73,0.45)]">
-        <div className="relative max-w-2xl">
-          <p className="rise eyebrow text-nieve/85" style={delay(0.1)}>
-            {site.location}
+      <div className="shell flex flex-1 flex-col pb-5 pt-[104px] sm:pb-6 sm:pt-[128px] [text-shadow:0_1px_14px_rgba(36,72,97,0.35)]">
+        <div className="rise eyebrow hidden justify-between text-nieve sm:flex" style={delay(0.1)}>
+          <span>{site.location}</span>
+          <span>{coordinates}</span>
+        </div>
+
+        <div className="mt-auto sm:mt-8">
+          <p className="rise eyebrow mb-5 text-nieve sm:hidden" style={delay(0.1)}>
+            Sierra Nevada · 2.100 m
           </p>
-
-          <h1 className="mt-5 font-serif text-display">
+          <h1 className="font-serif text-hero font-normal tracking-[-0.035em]">
             <span className="line-mask">
-              <span className="line-inner" style={delay(0.2)}>Tu escapada</span>
+              <span className="line-inner" style={delay(0.2)}>La montaña,</span>
             </span>
             <span className="line-mask">
-              <span className="line-inner" style={delay(0.34)}>a la nieve</span>
+              <span className="line-inner italic sm:pl-[1.2em]" style={delay(0.34)}>sin prisa.</span>
             </span>
           </h1>
+        </div>
 
-          <p className="rise mt-6 max-w-[38ch] text-base leading-relaxed text-nieve sm:text-lg" style={delay(0.45)}>
-            Apartamentos y clases de esquí y snowboard en Sierra Nevada, para vivir la montaña con calma y sin preocupaciones.
+        <div
+          className="rise mt-8 grid grid-cols-2 border-t border-nieve/50 sm:mt-auto lg:grid-cols-[1fr_1fr_1fr_auto]"
+          style={delay(0.55)}
+        >
+          <p className="col-span-2 py-5 text-base leading-relaxed sm:max-w-[40ch] sm:py-7 sm:pr-8 lg:col-span-1 lg:text-[1.05rem]">
+            Cuatro apartamentos y clases privadas de esquí y snowboard. Tú subes. Del resto nos ocupamos nosotros.
           </p>
 
-          <div className="rise mt-9 flex flex-wrap gap-3" style={delay(0.6)}>
-            <a
-              href="#alojamientos"
-              className="group inline-flex items-center gap-2 rounded-full bg-nieve px-6 py-3 text-sm font-medium text-pizarra transition-colors duration-300 hover:bg-crema"
-            >
-              Ver alojamientos
-              <ArrowRightIcon width={16} height={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
-            </a>
-            <a
-              href="#clases"
-              className="inline-flex items-center rounded-full border border-nieve/70 px-6 py-3 text-sm font-medium text-nieve backdrop-blur-[2px] transition-colors duration-300 hover:bg-nieve/15"
-            >
-              Clases de esquí y snowboard
-            </a>
-          </div>
+          <HeroLink href="#alojamientos" index="01" label="Dormir" title="Apartamentos" className="lg:border-l lg:px-7" />
+          <HeroLink href="#clases" index="02" label="Aprender" title="Clases con Lexa" className="border-l border-nieve/50 pl-4 sm:pl-7 lg:px-7" />
+
+          <a
+            href={site.bookingUrl}
+            className="col-span-2 mt-3 flex min-h-11 flex-col justify-center gap-1.5 rounded-control bg-accion px-6 lg:mt-5 py-4 text-center [text-shadow:none] transition-colors duration-300 hover:bg-accion-hover sm:mt-0 lg:col-span-1 lg:min-w-[220px] lg:px-10 lg:py-7 lg:text-left"
+          >
+            <span className="eyebrow hidden lg:block">Temporada 26/27</span>
+            <span className="text-base font-semibold lg:text-xl">Reservar ahora</span>
+          </a>
         </div>
       </div>
-
-      {/* Indicador de scroll */}
-      <a
-        href="#servicio"
-        aria-label="Bajar a la siguiente sección"
-        className="rise absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 text-[0.6rem] font-medium uppercase tracking-[0.3em] text-nieve/80 sm:flex"
-        style={delay(1.1)}
-      >
-        Descubre
-        <span className="relative block h-12 w-px overflow-hidden bg-nieve/25">
-          <span className="scroll-cue absolute inset-0 bg-nieve" />
-        </span>
-      </a>
     </section>
+  )
+}
+
+function HeroLink({
+  href,
+  index,
+  label,
+  title,
+  className = '',
+}: {
+  href: string
+  index: string
+  label: string
+  title: string
+  className?: string
+}) {
+  return (
+    <a
+      href={href}
+      className={`group flex flex-col justify-center gap-2.5 border-nieve/50 py-4 sm:py-7 ${className}`}
+    >
+      <span className="eyebrow hidden sm:block">
+        {index} · {label}
+      </span>
+      <span className="inline-flex items-center gap-2 whitespace-nowrap font-serif text-2xl leading-none lg:text-[clamp(1.5rem,2.1vw,1.9rem)]">
+        <span className="sm:hidden">{label}</span>
+        <span className="hidden sm:inline">{title}</span>
+        <ArrowRightIcon
+          width={22}
+          height={22}
+          className="shrink-0 transition-transform duration-300 group-hover:translate-x-1"
+        />
+      </span>
+    </a>
   )
 }

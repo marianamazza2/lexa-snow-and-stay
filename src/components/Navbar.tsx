@@ -88,10 +88,11 @@ export function Navbar({ overHero = true }: { overHero?: boolean }) {
             <a
               href={site.bookingUrl}
               className={cn(
-                'hidden rounded-full px-5 py-2.5 text-sm font-medium transition-colors lg:inline-flex',
+                'hidden text-sm font-medium transition-colors lg:inline-flex',
+                // Sobre el hero, un enlace subrayado discreto (el botón fuerte está en la portada)
                 light
-                  ? 'bg-nieve text-pizarra hover:bg-crema'
-                  : 'bg-accion text-nieve hover:bg-accion-hover',
+                  ? 'border-b border-nieve py-1 font-semibold hover:border-glaciar hover:text-glaciar'
+                  : 'rounded-full bg-accion px-5 py-2.5 text-nieve hover:bg-accion-hover',
               )}
             >
               Reservar clase

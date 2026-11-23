@@ -15,11 +15,20 @@
   --color-pino: #2e6b4e;
   --color-alerta: #a3262a;
 
-  --font-serif: 'Marcellus', Georgia, serif;
+  /* Titulares: Fraunces. El logotipo «LEXA» mantiene Marcellus, eco del logo oficial */
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-logo: 'Marcellus', Georgia, serif;
+
+  /* Esquinas de las fotos: redondeo sutil (clase rounded-media) */
+  --radius-media: 0.75rem;
+  /* Botones y opciones: mismo lenguaje, algo más pequeño (clase rounded-control) */
+  --radius-control: 0.5rem;
 
   /* Escala tipográfica de toda la web */
   --text-display: clamp(2.75rem, 8vw, 5.75rem); /* titular del hero */
   --text-display--line-height: 1.02;
+  --text-hero: clamp(4rem, 11.5vw, 12rem); /* titular grande del hero */
+  --text-hero--line-height: 0.88;
   --text-title: clamp(2.4rem, 4.6vw, 4rem); /* títulos de sección */
   --text-title--line-height: 1.05;
   --text-card: 1.7rem; /* títulos de tarjetas */
@@ -28,7 +37,7 @@
   --text-lead--line-height: 1.7;
   --text-eyebrow: 0.7rem; /* antetítulos en mayúsculas */
   --text-eyebrow--line-height: 1.4;
-  --font-sans: 'Mulish', system-ui, sans-serif;
+  --font-sans: 'Manrope', system-ui, sans-serif;
 }
 
 /* Ancho del contenido: márgenes laterales que crecen con la pantalla y un máximo

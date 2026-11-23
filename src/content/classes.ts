@@ -9,6 +9,8 @@ const unsplash = (id: string, w = 1000) =>
 export const classesIntro = {
   eyebrow: 'Clases',
   title: 'Aprende con Lexa',
+  // El titular se muestra en dos líneas; la segunda en cursiva
+  titleLines: ['Aprende', 'con Lexa.'],
   text: 'Clases particulares de snowboard y esquí, de hasta tres personas, en las pistas de Sierra Nevada. Vamos a tu ritmo, con atención de verdad y la confianza de alguien que conoce cada rincón de la montaña.',
 }
 

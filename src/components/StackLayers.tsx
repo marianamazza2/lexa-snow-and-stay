@@ -1,5 +1,5 @@
 import { Children, type ReactNode, useEffect, useRef, useState } from 'react'
-import { motion, useScroll, useTransform } from 'motion/react'
+import { motion, useMotionValue, useTransform } from 'motion/react'
 import { cn } from '@/lib/cn'
 
 /**
@@ -46,10 +46,29 @@ function Layer({ children, index, last }: { children: ReactNode; index: number; 
     }
   }, [last])
 
-  // Avance de la capa siguiente: 0 cuando asoma por abajo, 1 cuando llega arriba
-  const { scrollYProgress } = useScroll({ target: nextStart, offset: ['start end', 'start start'] })
-  const shade = useTransform(scrollYProgress, [0, 1], [0, 0.45])
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95])
+  // Avance de la capa siguiente: 0 cuando asoma por abajo, 1 cuando llega arriba.
+  // Se mide en cada scroll (no con useScroll) porque el alto de las secciones cambia
+  // al cargar fuentes e imágenes, y una medida guardada se queda desfasada.
+  // La última capa no tiene capa siguiente, así que no mide nada.
+  const progress = useMotionValue(0)
+  useEffect(() => {
+    const el = nextStart.current
+    if (!el || last) return
+    const update = () => {
+      const vh = window.innerHeight
+      const top = el.getBoundingClientRect().top
+      progress.set(Math.min(1, Math.max(0, (vh - top) / vh)))
+    }
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [last, progress])
+  const shade = useTransform(progress, [0, 1], [0, 0.45])
+  const scale = useTransform(progress, [0, 1], [1, 0.95])
 
   return (
     <>
