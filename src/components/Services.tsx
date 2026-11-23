@@ -55,8 +55,8 @@ export function Services() {
                   <h3 className="mt-3 font-serif text-[clamp(1.9rem,2.6vw,2.4rem)] leading-[1.05] text-pizarra">
                     {point.title}
                   </h3>
-                  <p className="mt-3 leading-relaxed text-piedra">{point.text}</p>
-                  <span className="mt-6 inline-flex items-center gap-2 self-start whitespace-nowrap border-b border-pizarra pb-1 text-sm font-semibold text-pizarra transition-colors duration-300 group-hover:border-lago group-hover:text-lago">
+                  <p className="mb-7 mt-3 leading-relaxed text-piedra">{point.text}</p>
+                  <span className="btn btn-primary mt-auto self-start group-hover:bg-accion-hover">
                     {point.cta}
                     <ArrowRightIcon width={16} height={16} className="transition-transform duration-300 group-hover:translate-x-1" />
                   </span>

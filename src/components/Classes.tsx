@@ -93,11 +93,11 @@ export function Classes() {
                     {mode.text}
                   </p>
                   <div className="mt-8 flex items-center justify-between gap-4 text-sm sm:mt-auto sm:pt-8">
-                    <span className="text-glaciar">Hasta 3 personas</span>
+                    <span className="whitespace-nowrap text-glaciar">Hasta 3 personas</span>
                     <a
                       href={site.bookingUrl}
                       aria-label={`Reservar clase de ${mode.discipline.toLowerCase()}: ${mode.title}`}
-                      className="inline-flex items-center gap-2 whitespace-nowrap border-b border-nieve pb-1 font-semibold transition-colors duration-300 hover:border-glaciar hover:text-glaciar"
+                      className="btn btn-light"
                     >
                       Reservar
                       <ArrowRightIcon
@@ -137,7 +137,7 @@ export function Classes() {
             <div>
               <a
                 href={site.bookingUrl}
-                className="group inline-flex min-h-11 items-center gap-3 whitespace-nowrap rounded-control bg-nieve px-7 py-4 text-sm font-semibold text-pizarra transition-colors duration-300 hover:bg-crema"
+                className="group btn btn-light px-7 py-4"
               >
                 Ver horarios y reservar
                 <ArrowRightIcon

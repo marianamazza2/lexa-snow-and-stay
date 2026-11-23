@@ -115,7 +115,7 @@ export function Contact() {
                 <button
                   type="button"
                   onClick={() => setStatus('idle')}
-                  className="mt-2 text-sm font-semibold text-lago underline-offset-4 hover:underline"
+                  className="btn btn-outline mt-2"
                 >
                   Enviar otra consulta
                 </button>

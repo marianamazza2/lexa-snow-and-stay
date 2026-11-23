@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { cn } from '@/lib/cn'
 import { publishedApartments, type Apartment } from '@/content/apartments'
 import { MaskLine, Reveal } from './Reveal'
 import { ArrowRightIcon } from './icons'
@@ -63,7 +64,7 @@ export function Apartments() {
   )
 }
 
-function ApartmentCard({ apt }: { apt: Apartment }) {
+export function ApartmentCard({ apt, className }: { apt: Apartment; className?: string }) {
   const [cover, second] = apt.images
   const rooms = [
     `${apt.bedrooms} ${apt.bedrooms === 1 ? 'dormitorio' : 'dormitorios'}`,
@@ -75,7 +76,10 @@ function ApartmentCard({ apt }: { apt: Apartment }) {
       to="/apartamentos/$slug"
       params={{ slug: apt.slug }}
       aria-label={`Apartamento ${apt.name}`}
-      className="group relative isolate block aspect-[4/5] overflow-hidden rounded-media bg-lino text-nieve sm:aspect-[4/3] lg:aspect-[3/2]"
+      className={cn(
+        'group relative isolate block aspect-[4/5] overflow-hidden rounded-media bg-lino text-nieve sm:aspect-[4/3] lg:aspect-[3/2]',
+        className,
+      )}
     >
       {/* Foto: al pasar el ratón cambia a la segunda */}
       <img
@@ -106,7 +110,7 @@ function ApartmentCard({ apt }: { apt: Apartment }) {
             {rooms.join(' · ')} · Hasta {apt.guests} personas
           </p>
         </div>
-        <span className="inline-flex items-center gap-2 whitespace-nowrap border-b border-nieve pb-1 text-sm font-semibold transition-colors duration-300 group-hover:border-glaciar group-hover:text-glaciar">
+        <span className="btn btn-light group-hover:bg-crema">
           Ver apartamento
           <ArrowRightIcon width={16} height={16} className="transition-transform duration-300 group-hover:translate-x-1" />
         </span>

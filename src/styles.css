@@ -133,3 +133,44 @@ html.lenis, html.lenis body { height: auto; }
   text-transform: uppercase;
   letter-spacing: 0.32em;
 }
+
+/* Botones de llamada a la acción: mismo tamaño, radio y peso en toda la web.
+   btn-primary: azul de la marca (fondos claros)
+   btn-light: blanco (sobre fotos y fondos oscuros)
+   btn-outline / btn-outline-light: secundarios con borde */
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 2.75rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--radius-control);
+  border: 1px solid transparent;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-shadow: none;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+@utility btn-primary {
+  background: var(--color-accion);
+  color: var(--color-nieve);
+  &:hover { background: var(--color-accion-hover); }
+}
+@utility btn-light {
+  background: var(--color-nieve);
+  color: var(--color-pizarra);
+  &:hover { background: var(--color-crema); }
+}
+@utility btn-outline {
+  border-color: color-mix(in srgb, var(--color-pizarra) 35%, transparent);
+  color: var(--color-pizarra);
+  &:hover { border-color: var(--color-pizarra); }
+}
+@utility btn-outline-light {
+  border-color: color-mix(in srgb, var(--color-nieve) 60%, transparent);
+  color: var(--color-nieve);
+  &:hover { border-color: var(--color-nieve); background: color-mix(in srgb, var(--color-nieve) 10%, transparent); }
+}

@@ -69,3 +69,31 @@ export const BathIcon = (p: SVGProps<SVGSVGElement>) => (
     <path d="M7 19l-1 2M17 19l1 2" />
   </svg>
 )
+
+export const CheckIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base} {...p}>
+    <path d="m5 12.5 4.5 4.5L19 7.5" />
+  </svg>
+)
+
+export const CloseIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base} {...p}>
+    <path d="M6 6l12 12M18 6 6 18" />
+  </svg>
+)
+
+export const GridIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base} {...p}>
+    <rect x="4" y="4" width="6.5" height="6.5" rx="1" />
+    <rect x="13.5" y="4" width="6.5" height="6.5" rx="1" />
+    <rect x="4" y="13.5" width="6.5" height="6.5" rx="1" />
+    <rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1" />
+  </svg>
+)
+
+export const PinIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base} {...p}>
+    <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z" />
+    <circle cx="12" cy="10" r="2.3" />
+  </svg>
+)

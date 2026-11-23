@@ -88,11 +88,9 @@ export function Navbar({ overHero = true }: { overHero?: boolean }) {
             <a
               href={site.bookingUrl}
               className={cn(
-                'hidden text-sm font-medium transition-colors lg:inline-flex',
-                // Sobre el hero, un enlace subrayado discreto (el botón fuerte está en la portada)
-                light
-                  ? 'border-b border-nieve py-1 font-semibold hover:border-glaciar hover:text-glaciar'
-                  : 'rounded-full bg-accion px-5 py-2.5 text-nieve hover:bg-accion-hover',
+                'btn hidden lg:inline-flex',
+                // Sobre el hero, botón blanco; con la barra sólida, botón azul
+                light ? 'btn-light' : 'btn-primary',
               )}
             >
               Reservar clase
@@ -162,7 +160,7 @@ export function Navbar({ overHero = true }: { overHero?: boolean }) {
               <a
                 href={site.bookingUrl}
                 onClick={() => setOpen(false)}
-                className="rounded-full bg-accion py-4 text-center font-medium text-nieve"
+                className="btn btn-primary py-4 text-base"
               >
                 Reservar clase
               </a>

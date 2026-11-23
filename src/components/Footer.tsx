@@ -31,7 +31,7 @@ export function Footer({ home = true }: { home?: boolean }) {
             </p>
             <a
               href={toHome(site.bookingUrl)}
-              className="group mt-8 inline-flex items-center gap-2 whitespace-nowrap border-b border-nieve pb-1 text-sm font-semibold transition-colors hover:border-glaciar hover:text-glaciar"
+              className="group btn btn-light mt-8"
             >
               Reservar clase
               <ArrowRightIcon width={16} height={16} className="transition-transform duration-300 group-hover:translate-x-1" />

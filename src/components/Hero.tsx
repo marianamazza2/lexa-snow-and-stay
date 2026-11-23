@@ -32,7 +32,7 @@ export function Hero() {
       />
       {/* Velos en azul de la marca: arriba para la navbar, abajo para el texto.
           El centro queda limpio para que la nieve se vea blanca */}
-      <div aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(36,72,97,0.5)_0%,rgba(36,72,97,0)_28%,rgba(36,72,97,0)_42%,rgba(36,72,97,0.9)_100%)]" />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(36,72,97,0.5)_0%,rgba(36,72,97,0.05)_18%,rgba(36,72,97,0.3)_32%,rgba(36,72,97,0.55)_48%,rgba(36,72,97,0.8)_70%,rgba(36,72,97,0.92)_100%)]" />
 
       <div className="shell flex flex-1 flex-col pb-5 pt-[104px] sm:pb-6 sm:pt-[128px] [text-shadow:0_1px_14px_rgba(36,72,97,0.35)]">
         <div className="rise eyebrow hidden justify-between text-nieve sm:flex" style={delay(0.1)}>
@@ -67,10 +67,10 @@ export function Hero() {
 
           <a
             href={site.bookingUrl}
-            className="col-span-2 mt-3 flex min-h-11 flex-col justify-center gap-1.5 rounded-control bg-accion px-6 lg:mt-5 py-4 text-center [text-shadow:none] transition-colors duration-300 hover:bg-accion-hover sm:mt-0 lg:col-span-1 lg:min-w-[220px] lg:px-10 lg:py-7 lg:text-left"
+            className="col-span-2 mt-3 flex min-h-11 flex-col justify-center gap-1.5 rounded-control bg-nieve px-6 py-4 text-center text-pizarra [text-shadow:none] transition-colors duration-300 hover:bg-crema lg:mt-5 sm:mt-0 lg:col-span-1 lg:min-w-[220px] lg:px-10 lg:py-7 lg:text-left"
           >
-            <span className="eyebrow hidden lg:block">Temporada 26/27</span>
-            <span className="text-base font-semibold lg:text-xl">Reservar ahora</span>
+            <span className="eyebrow hidden text-lago lg:block">Temporada 26/27</span>
+            <span className="text-base font-semibold lg:text-xl">Reservar clase</span>
           </a>
         </div>
       </div>
