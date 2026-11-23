@@ -5,7 +5,10 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   server: { port: 3000 },
-  resolve: { tsconfigPaths: true },
+  resolve: { tsconfigPaths: true, dedupe: ['react', 'react-dom'] },
+  // Pre-empaqueta estas dependencias al arrancar para que el servidor de
+  // desarrollo no cargue dos copias de React al descubrirlas más tarde.
+  optimizeDeps: { include: ['motion/react', 'clsx', 'tailwind-merge', 'lenis'] },
   plugins: [
     tailwindcss(),
     // Genera HTML estático de cada página (home, fichas de apartamentos, legales)

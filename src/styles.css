@@ -16,12 +16,111 @@
   --color-alerta: #a3262a;
 
   --font-serif: 'Marcellus', Georgia, serif;
+
+  /* Escala tipográfica de toda la web */
+  --text-display: clamp(2.75rem, 8vw, 5.75rem); /* titular del hero */
+  --text-display--line-height: 1.02;
+  --text-title: clamp(2.4rem, 4.6vw, 4rem); /* títulos de sección */
+  --text-title--line-height: 1.05;
+  --text-card: 1.7rem; /* títulos de tarjetas */
+  --text-card--line-height: 1.25;
+  --text-lead: 1.125rem; /* textos de entrada (18px) */
+  --text-lead--line-height: 1.7;
+  --text-eyebrow: 0.7rem; /* antetítulos en mayúsculas */
+  --text-eyebrow--line-height: 1.4;
   --font-sans: 'Mulish', system-ui, sans-serif;
 }
 
+/* Ancho del contenido: márgenes laterales que crecen con la pantalla y un máximo
+   amplio, para que en monitores grandes el contenido no quede angosto en el centro */
+:root {
+  --shell-max: 2200px;
+  --shell-gutter: clamp(1.25rem, 5vw, 7.5rem);
+  /* Distancia del borde al inicio del contenido, para sliders a sangre.
+     Usa % (ancho del contenedor) y no vw, para no contar la barra de scroll. */
+  --shell-inset: max(var(--shell-gutter), calc((100% - var(--shell-max)) / 2 + var(--shell-gutter)));
+}
+
+@utility shell {
+  width: 100%;
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  padding-inline: var(--shell-gutter);
+}
+
 html {
+  scroll-behavior: smooth;
   font-family: var(--font-sans);
   color: var(--color-pizarra);
   background: var(--color-nieve);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Entrada del hero en CSS: funciona antes de que cargue el JavaScript */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+/* Entrada de la foto del hero: llega desenfocada y algo ampliada, y se enfoca */
+@keyframes settle {
+  from { transform: scale(1.08); filter: blur(18px); }
+  to { transform: scale(1); filter: blur(0); }
+}
+.rise {
+  animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0s);
+}
+.hero-settle {
+  animation: settle 2.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise, .hero-settle { animation: none; }
+}
+
+/* Titular: cada línea sube desde detrás de una máscara */
+@keyframes line-up {
+  from { transform: translateY(105%); }
+  to { transform: none; }
+}
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.line-inner {
+  display: block;
+  animation: line-up 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0s);
+}
+
+/* Indicador de scroll: una línea que cae en bucle */
+@keyframes scroll-cue {
+  0% { transform: scaleY(0); transform-origin: top; }
+  45% { transform: scaleY(1); transform-origin: top; }
+  55% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+.scroll-cue { animation: scroll-cue 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+
+/* Lenis (scroll suave) */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .line-inner, .scroll-cue { animation: none; }
+}
+
+/* Oculta la barra de scroll en sliders (el scroll sigue funcionando) */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Antetítulo: pequeño, en mayúsculas y espaciado */
+@utility eyebrow {
+  font-size: var(--text-eyebrow);
+  line-height: var(--text-eyebrow--line-height);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
 }

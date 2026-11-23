@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react'
 import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
+import { MotionConfig } from 'motion/react'
+import { SmoothScroll } from '@/components/SmoothScroll'
 import appCss from '@/styles.css?url'
 
 export const Route = createRootRoute({
@@ -29,7 +31,11 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <RootDocument>
-      <Outlet />
+      {/* Respeta la preferencia del sistema de reducir movimiento */}
+      <MotionConfig reducedMotion="user">
+        <SmoothScroll />
+        <Outlet />
+      </MotionConfig>
     </RootDocument>
   )
 }
