@@ -3,9 +3,11 @@ import { AnimatePresence, motion } from 'motion/react'
 import { site } from '@/content/site'
 import { cn } from '@/lib/cn'
 import { MaskLine, Reveal, ease } from './Reveal'
-import { ArrowRightIcon } from './icons'
+import { ArrowRightIcon, ChevronDownIcon, InstagramIcon, MailIcon } from './icons'
 
 const TOPICS = ['Alojamiento', 'Clases', 'Otra consulta'] as const
+// En móvil, etiquetas cortas para que las tres opciones quepan en una fila
+const TOPIC_SHORT: Record<string, string> = { 'Otra consulta': 'Otra' }
 type Topic = (typeof TOPICS)[number]
 
 type Errors = Partial<Record<'name' | 'email' | 'message' | 'privacy', string>>
@@ -19,6 +21,8 @@ export function Contact() {
   const [topic, setTopic] = useState<Topic>('Alojamiento')
   const [errors, setErrors] = useState<Errors>({})
   const [status, setStatus] = useState<Status>('idle')
+  // Móvil: teléfono y fechas (opcionales) quedan plegados para acortar el formulario
+  const [extra, setExtra] = useState(false)
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -63,7 +67,7 @@ export function Contact() {
 
   return (
     <section id="contacto" aria-labelledby="contacto-titulo" className="scroll-mt-[72px] bg-crema text-pizarra">
-      <div className="shell grid gap-16 py-24 sm:py-28 lg:grid-cols-12 lg:gap-20 lg:py-[120px]">
+      <div className="shell grid gap-10 py-20 sm:gap-16 sm:py-28 lg:grid-cols-12 lg:gap-20 lg:py-[120px]">
         {/* Columna izquierda */}
         <div className="lg:col-span-5">
           <Reveal>
@@ -71,7 +75,7 @@ export function Contact() {
           </Reveal>
           <h2
             id="contacto-titulo"
-            className="mt-6 font-serif text-[clamp(2.75rem,6vw,5.5rem)] font-light leading-[0.95] tracking-[-0.03em]"
+            className="mt-5 font-serif text-[clamp(2.5rem,6vw,5.5rem)] sm:mt-6 font-light leading-[0.95] tracking-[-0.03em]"
           >
             <MaskLine>Hablemos de</MaskLine>
             <MaskLine delay={0.08}>
@@ -79,16 +83,25 @@ export function Contact() {
             </MaskLine>
           </h2>
           <Reveal delay={0.15}>
-            <p className="mt-7 max-w-[40ch] text-lead text-piedra">
+            <p className="mt-5 max-w-[40ch] text-lead text-piedra sm:mt-7">
               ¿Dudas sobre disponibilidad, niveles o algo concreto? Escríbenos y te respondemos personalmente.
             </p>
           </Reveal>
 
-          {/* Vías directas */}
-          <Reveal delay={0.25} className="mt-12 border-t border-pizarra">
+          {/* Vías directas. Móvil: dos botones con icono; desde sm, filas */}
+          <Reveal delay={0.25} className="mt-6 grid grid-cols-2 gap-3 sm:hidden">
+            <a href={site.instagramUrl} target="_blank" rel="noreferrer" className="btn btn-outline px-3">
+              <InstagramIcon width={18} height={18} />
+              Instagram
+            </a>
+            <a href={`mailto:${site.email}`} className="btn btn-outline px-3">
+              <MailIcon width={18} height={18} />
+              Email
+            </a>
+          </Reveal>
+          <Reveal delay={0.25} className="mt-12 hidden border-t border-pizarra sm:block">
             <ContactRow label="Instagram" value={site.instagramHandle} href={site.instagramUrl} external />
             <ContactRow label="Email" value={site.email} href={`mailto:${site.email}`} />
-            <ContactRow label="Dónde" value={site.location} />
           </Reveal>
         </div>
 
@@ -132,17 +145,17 @@ export function Contact() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="grid gap-6"
+                className="grid gap-5 sm:gap-6"
               >
                 {/* Motivo */}
                 <fieldset>
                   <legend className="mb-3 text-sm font-semibold text-pizarra">¿Sobre qué quieres consultar?</legend>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap">
                     {TOPICS.map((t) => (
                       <label
                         key={t}
                         className={cn(
-                          'cursor-pointer rounded-control border px-4 py-2.5 text-sm font-medium transition-colors duration-300 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-lago',
+                          'cursor-pointer rounded-control border px-2 py-2.5 text-center text-sm sm:px-4 font-medium transition-colors duration-300 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-lago',
                           topic === t
                             ? 'border-pizarra bg-pizarra text-nieve'
                             : 'border-pizarra/30 text-pizarra hover:border-pizarra',
@@ -156,15 +169,33 @@ export function Contact() {
                           onChange={() => setTopic(t)}
                           className="sr-only"
                         />
-                        {t}
+                        <span className="sm:hidden">{TOPIC_SHORT[t] ?? t}</span>
+                        <span className="hidden sm:inline">{t}</span>
                       </label>
                     ))}
                   </div>
                 </fieldset>
 
-                <div className="grid gap-5 sm:grid-cols-2 sm:gap-x-5">
+                <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
                   <Field id="name" label="Nombre" error={errors.name} autoComplete="name" />
                   <Field id="email" label="Email" type="email" error={errors.email} autoComplete="email" />
+                </div>
+
+                {/* Opcionales: en móvil, plegados tras un botón */}
+                <button
+                  type="button"
+                  onClick={() => setExtra((v) => !v)}
+                  aria-expanded={extra}
+                  aria-controls="contacto-opcionales"
+                  className="-my-1 flex items-center justify-between text-sm font-semibold text-lago sm:hidden"
+                >
+                  Añadir teléfono y fechas (opcional)
+                  <ChevronDownIcon width={18} height={18} className={cn('transition-transform duration-300', extra && 'rotate-180')} />
+                </button>
+                <div
+                  id="contacto-opcionales"
+                  className={cn('gap-4 sm:grid sm:grid-cols-2 sm:gap-5', extra ? 'grid' : 'hidden')}
+                >
                   <Field id="phone" label="Teléfono (opcional)" type="tel" autoComplete="tel" />
                   <Field
                     id="dates"
@@ -269,7 +300,7 @@ function Field({
 }) {
   // Campos en caja: fondo crema suave, borde fino y foco en azul
   const base =
-    'w-full rounded-control border bg-crema/40 px-4 py-3 text-base text-pizarra placeholder:text-piedra/60 transition-colors duration-300 hover:border-pizarra/40 focus:border-lago focus:bg-nieve focus:outline-none focus:ring-2 focus:ring-lago/20'
+    'w-full rounded-control border bg-crema/40 px-4 py-2.5 text-base sm:py-3 text-pizarra placeholder:text-piedra/60 transition-colors duration-300 hover:border-pizarra/40 focus:border-lago focus:bg-nieve focus:outline-none focus:ring-2 focus:ring-lago/20'
   const tone = error ? 'border-alerta' : 'border-escarcha'
   const describedBy = error ? `${id}-error` : undefined
 
@@ -282,7 +313,7 @@ function Field({
         <textarea
           id={id}
           name={id}
-          rows={4}
+          rows={3}
           placeholder={placeholder}
           aria-invalid={!!error}
           aria-describedby={describedBy}

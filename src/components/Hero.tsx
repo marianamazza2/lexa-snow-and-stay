@@ -55,7 +55,7 @@ export function Hero() {
         </div>
 
         <div
-          className="rise mt-8 grid grid-cols-2 border-t border-nieve/50 sm:mt-auto lg:grid-cols-3"
+          className="rise mt-8 grid grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] border-t sm:grid-cols-2 border-nieve/50 sm:mt-auto lg:grid-cols-3"
           style={delay(0.55)}
         >
           <p className="col-span-2 py-5 text-base leading-relaxed sm:max-w-[40ch] sm:py-7 sm:pr-8 lg:col-span-1 lg:text-[1.05rem]">
