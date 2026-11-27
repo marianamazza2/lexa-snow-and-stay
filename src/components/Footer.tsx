@@ -2,11 +2,11 @@ import { useState, type ReactNode } from 'react'
 import { site } from '@/content/site'
 import { cn } from '@/lib/cn'
 import { Logo } from './Logo'
-import { ArrowRightIcon, ChevronDownIcon, InstagramIcon } from './icons'
+import { ChevronDownIcon, InstagramIcon } from './icons'
 
 /**
  * Pie de página: marca, navegación, contacto y enlaces legales.
- * En móvil va compacto: logo más pequeño, sin botón, y "Explora" y "Contacto"
+ * En móvil va compacto: y "Explora" y "Contacto"
  * plegados (se abren con la flecha). En las páginas que no son la home, los
  * enlaces de sección llevan a la home.
  */
@@ -23,18 +23,11 @@ export function Footer({ home = true }: { home?: boolean }) {
           {/* Marca */}
           <div className="pb-8 sm:pb-0 lg:col-span-5">
             <a href={home ? '#inicio' : '/'} aria-label="Lexa Snow & Stay, inicio" className="inline-block">
-              <Logo className="h-14 sm:h-24" />
+              <Logo className="h-11 sm:h-16" />
             </a>
             <p className="mt-4 max-w-[36ch] text-sm text-nieve/75 sm:mt-6 sm:text-base">
               Apartamentos y clases de esquí y snowboard en Sierra Nevada.
             </p>
-            <a
-              href={toHome(site.bookingUrl)}
-              className="group btn btn-light mt-8 hidden sm:inline-flex"
-            >
-              Reservar clase
-              <ArrowRightIcon width={16} height={16} className="transition-transform duration-300 group-hover:translate-x-1" />
-            </a>
           </div>
 
           {/* Navegación */}
@@ -53,11 +46,6 @@ export function Footer({ home = true }: { home?: boolean }) {
           {/* Contacto */}
           <FooterGroup title="Contacto" id="pie-contacto" className="lg:col-span-4">
             <ul className="grid gap-3">
-              <li>
-                <a href={`mailto:${site.email}`} className="break-all transition-colors hover:text-glaciar">
-                  {site.email}
-                </a>
-              </li>
               <li>
                 <a
                   href={site.instagramUrl}
