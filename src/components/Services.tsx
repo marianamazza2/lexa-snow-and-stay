@@ -63,9 +63,9 @@ export function Services() {
             <li key={point.title}>
               <a
                 href={point.href}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-escarcha bg-nieve shadow-[0_24px_60px_-34px_rgba(36,72,97,0.35)]"
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-escarcha bg-nieve"
               >
-                <div className="relative isolate aspect-[4/3] overflow-hidden bg-lino lg:aspect-[11/10]">
+                <div className="relative isolate aspect-[16/10] overflow-hidden bg-lino">
                   <img
                     src={point.image}
                     alt={point.imageAlt}
@@ -74,17 +74,12 @@ export function Services() {
                   />
                 </div>
 
-                <div className="flex flex-1 flex-col p-6 sm:p-7">
-                  <div className="flex items-baseline justify-between gap-4">
-                    <span className="font-serif text-[1.6rem] italic text-lago">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <span className="eyebrow text-piedra">{point.tag}</span>
-                  </div>
-                  <h3 className="mt-2 font-serif text-[clamp(1.7rem,2.6vw,2.4rem)] leading-[1.05] text-pizarra">
+                <div className="flex flex-1 flex-col p-5 sm:p-7">
+                  <span className="text-sm font-semibold text-lago">{String(i + 1).padStart(2, '0')}</span>
+                  <h3 className="mt-1.5 font-serif text-[clamp(1.6rem,2.4vw,2.1rem)] leading-[1.1] text-pizarra">
                     {point.title}
                   </h3>
-                  <p className="mb-7 mt-3 leading-relaxed text-piedra">{point.text}</p>
+                  <p className="mb-6 mt-2.5 leading-relaxed text-piedra">{point.text}</p>
                   <span className="btn btn-primary mt-auto self-start group-hover:bg-accion-hover">
                     {point.cta}
                     <ArrowRightIcon width={16} height={16} className="transition-transform duration-300 group-hover:translate-x-1" />

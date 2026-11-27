@@ -78,12 +78,12 @@ export function Classes() {
           label="Modalidades de clase"
           tone="light"
           className="mt-16 lg:mt-24"
-          gridClassName="sm:grid sm:gap-6 lg:grid-cols-2"
+          gridClassName="sm:grid sm:grid-cols-2 sm:gap-6"
         >
           {classModes.map((mode) => (
             <li key={mode.id}>
-              <article className="group grid h-full overflow-hidden rounded-2xl bg-nieve/[0.06] ring-1 ring-inset ring-crema/15 sm:grid-cols-[minmax(0,240px)_minmax(0,1fr)] lg:grid-cols-1 xl:grid-cols-[260px_minmax(0,1fr)]">
-                <div className="relative isolate aspect-[4/3] overflow-hidden bg-lino/20 sm:aspect-auto sm:min-h-[300px] lg:aspect-[16/10] lg:min-h-0 xl:aspect-auto xl:min-h-[320px]">
+              <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-nieve/[0.06] ring-1 ring-inset ring-crema/15">
+                <div className="relative isolate aspect-[16/10] overflow-hidden bg-lino/20">
                   <img
                     src={mode.image}
                     alt={mode.imageAlt}
@@ -91,31 +91,26 @@ export function Classes() {
                     className="absolute inset-0 size-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
                   />
                 </div>
-                <div className="flex min-w-0 flex-col p-6 sm:p-8">
-                  <span className="eyebrow text-glaciar">
+                <div className="flex min-w-0 flex-1 flex-col p-5 sm:p-7">
+                  <p className="text-sm font-semibold text-glaciar">
                     {mode.discipline} · {mode.level}
-                  </span>
-                  <h3 className="mt-3 font-serif text-[clamp(1.6rem,2vw,2.5rem)] font-normal leading-[1.05] break-words">
+                  </p>
+                  <h3 className="mt-1.5 font-serif text-[clamp(1.6rem,2.4vw,2.1rem)] font-normal leading-[1.1]">
                     {mode.title}
                   </h3>
-                  <p className="mb-8 mt-3 leading-relaxed text-crema">
-                    {mode.text}
-                  </p>
-                  <div className="mt-auto flex flex-col items-start gap-3 text-sm min-[400px]:flex-row min-[400px]:flex-wrap min-[400px]:items-center min-[400px]:justify-between sm:gap-4">
-                    <span className="whitespace-nowrap text-glaciar">Hasta 3 personas</span>
-                    <a
-                      href={site.bookingUrl}
-                      aria-label={`Reservar clase de ${mode.discipline.toLowerCase()}: ${mode.title}`}
-                      className="btn btn-light"
-                    >
-                      Reservar
-                      <ArrowRightIcon
-                        width={15}
-                        height={15}
-                        className="transition-transform duration-300 group-hover:translate-x-1"
-                      />
-                    </a>
-                  </div>
+                  <p className="mb-6 mt-2.5 leading-relaxed text-crema">{mode.text}</p>
+                  <a
+                    href={site.bookingUrl}
+                    aria-label={`Reservar clase de ${mode.discipline.toLowerCase()}: ${mode.title}`}
+                    className="btn btn-light mt-auto self-start"
+                  >
+                    Reservar
+                    <ArrowRightIcon
+                      width={15}
+                      height={15}
+                      className="transition-transform duration-300 group-hover:translate-x-1"
+                    />
+                  </a>
                 </div>
               </article>
             </li>

@@ -92,8 +92,12 @@ export function Contact() {
           </Reveal>
         </div>
 
-        {/* Formulario: abierto sobre el fondo, sin tarjeta */}
-        <Reveal delay={0.15} y={30} className="lg:col-span-7 lg:pt-3">
+        {/* Formulario: en una tarjeta blanca, con campos en caja */}
+        <Reveal
+          delay={0.15}
+          y={30}
+          className="rounded-2xl border border-escarcha bg-nieve p-5 sm:p-10 lg:col-span-7"
+        >
           <AnimatePresence mode="wait" initial={false}>
             {status === 'sent' ? (
               <motion.div
@@ -102,7 +106,7 @@ export function Contact() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5, ease }}
-                className="flex min-h-[420px] flex-col items-start justify-center gap-4 border-t border-pizarra pt-10"
+                className="flex min-h-[420px] flex-col items-start justify-center gap-4"
                 role="status"
               >
                 <span className="grid size-14 place-items-center rounded-full bg-glaciar/60 text-lago">
@@ -128,17 +132,17 @@ export function Contact() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="grid gap-9"
+                className="grid gap-6"
               >
                 {/* Motivo */}
                 <fieldset>
-                  <legend className="eyebrow mb-4 text-piedra">¿Sobre qué quieres consultar?</legend>
+                  <legend className="mb-3 text-sm font-semibold text-pizarra">¿Sobre qué quieres consultar?</legend>
                   <div className="flex flex-wrap gap-2">
                     {TOPICS.map((t) => (
                       <label
                         key={t}
                         className={cn(
-                          'cursor-pointer rounded-control border px-5 py-3 text-sm font-medium transition-colors duration-300 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-lago',
+                          'cursor-pointer rounded-control border px-4 py-2.5 text-sm font-medium transition-colors duration-300 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-lago',
                           topic === t
                             ? 'border-pizarra bg-pizarra text-nieve'
                             : 'border-pizarra/30 text-pizarra hover:border-pizarra',
@@ -158,7 +162,7 @@ export function Contact() {
                   </div>
                 </fieldset>
 
-                <div className="grid gap-9 sm:grid-cols-2 sm:gap-x-8">
+                <div className="grid gap-5 sm:grid-cols-2 sm:gap-x-5">
                   <Field id="name" label="Nombre" error={errors.name} autoComplete="name" />
                   <Field id="email" label="Email" type="email" error={errors.email} autoComplete="email" />
                   <Field id="phone" label="Teléfono (opcional)" type="tel" autoComplete="tel" />
@@ -263,15 +267,15 @@ function Field({
   placeholder?: string
   autoComplete?: string
 }) {
-  // Campos de línea: solo el borde inferior, sobre el fondo crema
+  // Campos en caja: fondo crema suave, borde fino y foco en azul
   const base =
-    'w-full border-0 border-b bg-transparent px-0 py-3 text-lg text-pizarra placeholder:text-piedra/70 transition-colors duration-300 focus:border-lago focus:shadow-[0_1px_0_0_var(--color-lago)] focus:outline-none'
-  const tone = error ? 'border-alerta' : 'border-pizarra/40'
+    'w-full rounded-control border bg-crema/40 px-4 py-3 text-base text-pizarra placeholder:text-piedra/60 transition-colors duration-300 hover:border-pizarra/40 focus:border-lago focus:bg-nieve focus:outline-none focus:ring-2 focus:ring-lago/20'
+  const tone = error ? 'border-alerta' : 'border-escarcha'
   const describedBy = error ? `${id}-error` : undefined
 
   return (
-    <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="eyebrow text-piedra">
+    <div className="flex flex-col gap-1.5">
+      <label htmlFor={id} className="text-sm font-semibold text-pizarra">
         {label}
       </label>
       {textarea ? (

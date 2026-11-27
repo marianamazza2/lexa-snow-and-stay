@@ -17,7 +17,7 @@ export const service = {
   points: [
     {
       tag: 'Alojamientos',
-      title: 'Apartamentos listos para ti',
+      title: 'Apartamentos',
       // PROVISIONAL: foto de ejemplo (Unsplash) hasta tener las reales
       image: unsplash('1585803114088-cd027272106a'),
       imageAlt: 'Salón con grandes ventanales y paisaje nevado',
