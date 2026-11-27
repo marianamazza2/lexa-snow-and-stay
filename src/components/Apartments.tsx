@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { cn } from '@/lib/cn'
 import { publishedApartments, type Apartment } from '@/content/apartments'
+import { MobileSlider } from './MobileSlider'
 import { MaskLine, Reveal } from './Reveal'
 import { ArrowRightIcon } from './icons'
 
@@ -52,13 +53,18 @@ export function Apartments() {
           </Reveal>
         </div>
 
-        <ul className="mt-14 grid gap-5 sm:mt-16 sm:grid-cols-2 lg:mt-20">
-          {publishedApartments.map((apt, i) => (
-            <Reveal key={apt.slug} as="li" delay={(i % 2) * 0.1} y={32}>
+        {/* En móvil, slider; desde sm, cuadrícula de dos columnas */}
+        <MobileSlider
+          label="Apartamentos"
+          className="mt-12 sm:mt-16 lg:mt-20"
+          gridClassName="sm:grid sm:grid-cols-2 sm:gap-5"
+        >
+          {publishedApartments.map((apt) => (
+            <li key={apt.slug}>
               <ApartmentCard apt={apt} />
-            </Reveal>
+            </li>
           ))}
-        </ul>
+        </MobileSlider>
       </div>
     </section>
   )

@@ -1,15 +1,20 @@
+import { useState } from 'react'
 import { service } from '@/content/about'
+import { cn } from '@/lib/cn'
+import { MobileSlider } from './MobileSlider'
 import { Reveal } from './Reveal'
 import { ScrollWords } from './ScrollWords'
 import { ArrowRightIcon } from './icons'
 
 /**
  * "El servicio": titular grande alineado a la izquierda (la segunda frase en
- * cursiva) y debajo los tres servicios a la vista, cada uno con su foto,
- * número, título, texto y enlace. Sin pasos ocultos: se entiende de un vistazo.
+ * cursiva), el texto (en móvil, con "Ver más") y los tres servicios en
+ * tarjetas: en móvil, un slider; en escritorio, en fila.
  */
 export function Services() {
   const [lead, end] = service.statement
+  const [open, setOpen] = useState(false)
+  const [first, ...rest] = service.intro
 
   return (
     <section id="servicio" aria-labelledby="servicio-titulo" className="bg-nieve py-24 sm:py-28 lg:py-[120px]">
@@ -24,19 +29,43 @@ export function Services() {
         >
           <ScrollWords text={lead} /> <ScrollWords text={end} className="italic text-lago" />
         </h2>
-        {/* Explicación del servicio, justo debajo del titular */}
-        <Reveal delay={0.1} className="mt-10 grid max-w-5xl gap-5 text-lead text-piedra">
-          {service.intro.map((p) => (
-            <p key={p}>{p}</p>
-          ))}
+        {/* Explicación del servicio, justo debajo del titular. En móvil, el resto tras "Ver más" */}
+        <Reveal delay={0.1} className="mt-8 max-w-5xl text-lead text-piedra sm:mt-10">
+          <p>{first}</p>
+          <div
+            id="servicio-mas"
+            className={cn('gap-5 sm:mt-5 sm:grid', open ? 'mt-5 grid' : 'hidden')}
+          >
+            {rest.map((p) => (
+              <p key={p}>{p}</p>
+            ))}
+          </div>
+          {rest.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls="servicio-mas"
+              className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-lago underline underline-offset-4 sm:hidden"
+            >
+              {open ? 'Ver menos' : 'Ver más'}
+            </button>
+          )}
         </Reveal>
 
-        {/* Los tres servicios */}
-        <ol className="mt-16 grid gap-14 sm:mt-20 sm:grid-cols-2 sm:gap-x-10 lg:mt-24 lg:grid-cols-3 lg:gap-12">
+        {/* Los tres servicios: tarjetas */}
+        <MobileSlider
+          label="Servicios"
+          className="mt-12 sm:mt-20 lg:mt-24"
+          gridClassName="sm:grid sm:grid-cols-2 sm:gap-6 lg:grid-cols-3"
+        >
           {service.points.map((point, i) => (
-            <Reveal key={point.title} as="li" delay={i * 0.1} y={28}>
-              <a href={point.href} className="group flex h-full flex-col">
-                <div className="relative isolate aspect-[4/3] overflow-hidden rounded-media bg-lino sm:aspect-[4/5] lg:aspect-[11/12]">
+            <li key={point.title}>
+              <a
+                href={point.href}
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-escarcha bg-nieve shadow-[0_24px_60px_-34px_rgba(36,72,97,0.35)]"
+              >
+                <div className="relative isolate aspect-[4/3] overflow-hidden bg-lino lg:aspect-[11/10]">
                   <img
                     src={point.image}
                     alt={point.imageAlt}
@@ -45,14 +74,14 @@ export function Services() {
                   />
                 </div>
 
-                <div className="mt-7 flex flex-1 flex-col border-t border-pizarra pt-6">
+                <div className="flex flex-1 flex-col p-6 sm:p-7">
                   <div className="flex items-baseline justify-between gap-4">
-                    <span className="font-serif text-[1.75rem] italic text-lago">
+                    <span className="font-serif text-[1.6rem] italic text-lago">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <span className="eyebrow text-piedra">{point.tag}</span>
                   </div>
-                  <h3 className="mt-3 font-serif text-[clamp(1.9rem,2.6vw,2.4rem)] leading-[1.05] text-pizarra">
+                  <h3 className="mt-2 font-serif text-[clamp(1.7rem,2.6vw,2.4rem)] leading-[1.05] text-pizarra">
                     {point.title}
                   </h3>
                   <p className="mb-7 mt-3 leading-relaxed text-piedra">{point.text}</p>
@@ -62,9 +91,9 @@ export function Services() {
                   </span>
                 </div>
               </a>
-            </Reveal>
+            </li>
           ))}
-        </ol>
+        </MobileSlider>
       </div>
     </section>
   )

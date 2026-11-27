@@ -4,15 +4,18 @@ import {
   classesIntro,
   howItWorks,
 } from "@/content/classes";
+import { useEffect, useState } from "react";
 import { site } from "@/content/site";
+import { cn } from "@/lib/cn";
+import { MobileSlider } from "./MobileSlider";
 import { ParallaxImage } from "./ParallaxImage";
 import { MaskLine, Reveal } from "./Reveal";
 import { ArrowRightIcon } from "./icons";
 
 /**
- * Clases, en fondo pizarra: titular grande y los tres pasos para reservar; las
- * modalidades en dos columnas (foto al lado del texto, con mucho aire entre
- * ellas) y una franja final a sangre con la foto y el botón a la agenda.
+ * Clases, en fondo pizarra: titular grande y los tres pasos para reservar (en
+ * móvil, en pestañas que avanzan solas); las modalidades en tarjetas (en móvil,
+ * un slider) y una franja final con la foto y el botón a la agenda.
  */
 export function Classes() {
   const [lineA, lineB] = classesIntro.titleLines;
@@ -47,7 +50,8 @@ export function Classes() {
                 {classesIntro.text}
               </p>
             </Reveal>
-            <ol className="mt-9 grid gap-1 border-t border-crema/30 sm:grid-cols-3 sm:gap-0">
+            <StepsMobile />
+            <ol className="mt-9 hidden border-t border-crema/30 sm:grid sm:grid-cols-3">
               {howItWorks.map((step, i) => (
                 <Reveal
                   key={step.title}
@@ -69,12 +73,17 @@ export function Classes() {
           </div>
         </div>
 
-        {/* Modalidades: 2 columnas, foto al lado del texto */}
-        <ul className="mt-20 grid gap-14 lg:mt-24 lg:grid-cols-2 lg:gap-x-14">
-          {classModes.map((mode, i) => (
-            <Reveal key={mode.id} as="li" delay={(i % 2) * 0.1} y={24}>
-              <article className="group grid gap-6 border-b border-crema/20 pb-14 sm:grid-cols-[minmax(0,240px)_minmax(0,1fr)] sm:gap-9 lg:grid-cols-1 xl:grid-cols-[260px_minmax(0,1fr)]">
-                <div className="relative isolate aspect-[4/3] overflow-hidden rounded-media bg-lino/20 sm:aspect-[3/4] lg:aspect-[4/3] xl:aspect-[3/4]">
+        {/* Modalidades: tarjetas. En móvil, slider */}
+        <MobileSlider
+          label="Modalidades de clase"
+          tone="light"
+          className="mt-16 lg:mt-24"
+          gridClassName="sm:grid sm:gap-6 lg:grid-cols-2"
+        >
+          {classModes.map((mode) => (
+            <li key={mode.id}>
+              <article className="group grid h-full overflow-hidden rounded-2xl bg-nieve/[0.06] ring-1 ring-inset ring-crema/15 sm:grid-cols-[minmax(0,240px)_minmax(0,1fr)] lg:grid-cols-1 xl:grid-cols-[260px_minmax(0,1fr)]">
+                <div className="relative isolate aspect-[4/3] overflow-hidden bg-lino/20 sm:aspect-auto sm:min-h-[300px] lg:aspect-[16/10] lg:min-h-0 xl:aspect-auto xl:min-h-[320px]">
                   <img
                     src={mode.image}
                     alt={mode.imageAlt}
@@ -82,17 +91,17 @@ export function Classes() {
                     className="absolute inset-0 size-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
                   />
                 </div>
-                <div className="flex min-w-0 flex-col">
+                <div className="flex min-w-0 flex-col p-6 sm:p-8">
                   <span className="eyebrow text-glaciar">
                     {mode.discipline} · {mode.level}
                   </span>
                   <h3 className="mt-3 font-serif text-[clamp(1.6rem,2vw,2.5rem)] font-normal leading-[1.05] break-words">
                     {mode.title}
                   </h3>
-                  <p className="mt-3.5 leading-relaxed text-crema">
+                  <p className="mb-8 mt-3 leading-relaxed text-crema">
                     {mode.text}
                   </p>
-                  <div className="mt-8 flex items-center justify-between gap-4 text-sm sm:mt-auto sm:pt-8">
+                  <div className="mt-auto flex flex-col items-start gap-3 text-sm min-[400px]:flex-row min-[400px]:flex-wrap min-[400px]:items-center min-[400px]:justify-between sm:gap-4">
                     <span className="whitespace-nowrap text-glaciar">Hasta 3 personas</span>
                     <a
                       href={site.bookingUrl}
@@ -109,9 +118,9 @@ export function Classes() {
                   </div>
                 </div>
               </article>
-            </Reveal>
+            </li>
           ))}
-        </ul>
+        </MobileSlider>
       </div>
 
       {/* Reserva: franja ancha con la foto, dentro del ancho del contenido */}
@@ -151,5 +160,68 @@ export function Classes() {
         </ParallaxImage>
       </div>
     </section>
+  );
+}
+
+/**
+ * Móvil: los tres pasos en pestañas. Avanzan solos cada pocos segundos (con una
+ * barra que marca el tiempo) hasta que tocas una; entonces se quedan quietos.
+ */
+function StepsMobile() {
+  const [active, setActive] = useState(0);
+  const [auto, setAuto] = useState(true);
+  const step = howItWorks[active];
+
+  useEffect(() => {
+    if (!auto) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const t = setTimeout(() => setActive((a) => (a + 1) % howItWorks.length), 4500);
+    return () => clearTimeout(t);
+  }, [active, auto]);
+
+  return (
+    <Reveal delay={0.25} y={12} className="mt-8 sm:hidden">
+      <div role="tablist" aria-label="Cómo reservar" className="grid grid-cols-3 gap-2">
+        {howItWorks.map((s, i) => (
+          <button
+            key={s.title}
+            type="button"
+            role="tab"
+            id={`paso-${i}`}
+            aria-selected={i === active}
+            aria-controls="paso-panel"
+            onClick={() => {
+              setActive(i);
+              setAuto(false);
+            }}
+            className={cn(
+              "relative flex flex-col items-start gap-1 overflow-hidden rounded-xl px-3 pb-3 pt-2.5 text-left transition-colors duration-300",
+              i === active ? "bg-nieve text-pizarra" : "bg-nieve/[0.07] text-crema",
+            )}
+          >
+            <span className={cn("font-serif text-xl italic", i === active ? "text-lago" : "text-glaciar")}>
+              {i + 1}
+            </span>
+            <span className="text-[0.8rem] font-semibold leading-tight">{s.title}</span>
+            {i === active && auto && (
+              <span
+                key={active}
+                aria-hidden
+                className="step-progress absolute inset-x-0 bottom-0 h-0.5 origin-left bg-lago"
+              />
+            )}
+          </button>
+        ))}
+      </div>
+      <p
+        id="paso-panel"
+        role="tabpanel"
+        aria-labelledby={`paso-${active}`}
+        aria-live="polite"
+        className="mt-4 min-h-[3.2em] text-sm leading-relaxed text-glaciar"
+      >
+        {step.text}
+      </p>
+    </Reveal>
   );
 }

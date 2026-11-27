@@ -13,7 +13,7 @@ const coordinates = '37°05′ N — 3°23′ O · 2.100 m'
 
 /**
  * Portada editorial: foto a sangre, titular muy grande y, abajo, una franja con
- * el texto, los accesos a Dormir y Aprender y el botón de reserva.
+ * el texto, los accesos a Apartamentos y Clases.
  * Las entradas se animan con CSS (funcionan antes de que cargue el JavaScript).
  */
 export function Hero() {
@@ -62,8 +62,8 @@ export function Hero() {
             Cuatro apartamentos y clases privadas de esquí y snowboard. Tú subes. Del resto nos ocupamos nosotros.
           </p>
 
-          <HeroLink href="#alojamientos" index="01" label="Dormir" title="Apartamentos" className="lg:border-l lg:px-7" />
-          <HeroLink href="#clases" index="02" label="Aprender" title="Clases con Lexa" className="border-l border-nieve/50 pl-4 sm:pl-7 lg:px-7" />
+          <HeroLink href="#alojamientos" index="01" label="Dormir" short="Apartamentos" title="Apartamentos" className="lg:border-l lg:px-7" />
+          <HeroLink href="#clases" index="02" label="Aprender" short="Clases" title="Clases con Lexa" className="border-l border-nieve/50 pl-4 sm:pl-7 lg:px-7" />
 
         </div>
       </div>
@@ -75,12 +75,14 @@ function HeroLink({
   href,
   index,
   label,
+  short,
   title,
   className = '',
 }: {
   href: string
   index: string
   label: string
+  short: string
   title: string
   className?: string
 }) {
@@ -92,8 +94,8 @@ function HeroLink({
       <span className="eyebrow hidden sm:block">
         {index} · {label}
       </span>
-      <span className="inline-flex items-center gap-2 whitespace-nowrap font-serif text-2xl leading-none lg:text-[clamp(1.5rem,2.1vw,1.9rem)]">
-        <span className="sm:hidden">{label}</span>
+      <span className="inline-flex items-center gap-2 whitespace-nowrap font-serif text-[1.35rem] leading-none sm:text-2xl lg:text-[clamp(1.5rem,2.1vw,1.9rem)]">
+        <span className="sm:hidden">{short}</span>
         <span className="hidden sm:inline">{title}</span>
         <ArrowRightIcon
           width={22}
