@@ -6,6 +6,7 @@ import { site } from '@/content/site'
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
 import { Gallery } from '@/components/Gallery'
+import { MobileSlider } from '@/components/MobileSlider'
 import { ApartmentCard } from '@/components/Apartments'
 import { Reveal, MaskLine } from '@/components/Reveal'
 import { ArrowRightIcon, BathIcon, BedIcon, CheckIcon, PinIcon, UsersIcon } from '@/components/icons'
@@ -191,13 +192,18 @@ function ApartmentPage() {
         {others.length > 0 && (
           <div className="shell pb-24 sm:pb-28">
             <h2 className="font-serif text-[clamp(2rem,3.6vw,3rem)] font-light text-pizarra">Otros alojamientos</h2>
-            <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {/* En móvil, slider; desde sm, cuadrícula */}
+            <MobileSlider
+              label="Otros alojamientos"
+              className="mt-8"
+              gridClassName="sm:grid sm:grid-cols-2 sm:gap-5 lg:grid-cols-3"
+            >
               {others.map((o) => (
                 <li key={o.slug}>
                   <ApartmentCard apt={o} className="sm:aspect-[4/5] lg:aspect-[4/5]" />
                 </li>
               ))}
-            </ul>
+            </MobileSlider>
           </div>
         )}
       </main>

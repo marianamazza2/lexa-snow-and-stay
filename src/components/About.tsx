@@ -76,19 +76,21 @@ export function About() {
             ))}
           </dl>
 
-          <Reveal delay={0.5} className="mt-12 flex flex-wrap items-center gap-3">
+          <Reveal delay={0.5} className="mt-12 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-center">
             <a
               href={site.bookingUrl}
-              className="group btn btn-primary"
+              className="group btn btn-primary px-4 sm:px-6"
             >
-              Reservar una clase
+              <span className="sm:hidden">Reservar</span>
+              <span className="hidden sm:inline">Reservar una clase</span>
               <ArrowRightIcon width={16} height={16} className="transition-transform duration-300 group-hover:translate-x-1" />
             </a>
             <a
               href="#clases"
-              className="btn btn-outline"
+              className="btn btn-outline px-4 sm:px-6"
             >
-              Conoce las clases
+              <span className="sm:hidden">Conocer más</span>
+              <span className="hidden sm:inline">Conoce las clases</span>
             </a>
           </Reveal>
         </div>
