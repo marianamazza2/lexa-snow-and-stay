@@ -55,7 +55,7 @@ export function Hero() {
         </div>
 
         <div
-          className="rise mt-8 grid grid-cols-2 border-t border-nieve/50 sm:mt-auto lg:grid-cols-[1fr_1fr_1fr_auto]"
+          className="rise mt-8 grid grid-cols-2 border-t border-nieve/50 sm:mt-auto lg:grid-cols-3"
           style={delay(0.55)}
         >
           <p className="col-span-2 py-5 text-base leading-relaxed sm:max-w-[40ch] sm:py-7 sm:pr-8 lg:col-span-1 lg:text-[1.05rem]">
@@ -65,13 +65,6 @@ export function Hero() {
           <HeroLink href="#alojamientos" index="01" label="Dormir" title="Apartamentos" className="lg:border-l lg:px-7" />
           <HeroLink href="#clases" index="02" label="Aprender" title="Clases con Lexa" className="border-l border-nieve/50 pl-4 sm:pl-7 lg:px-7" />
 
-          <a
-            href={site.bookingUrl}
-            className="col-span-2 mt-3 flex min-h-11 flex-col justify-center gap-1.5 rounded-control bg-nieve px-6 py-4 text-center text-pizarra [text-shadow:none] transition-colors duration-300 hover:bg-crema lg:mt-5 sm:mt-0 lg:col-span-1 lg:min-w-[220px] lg:px-10 lg:py-7 lg:text-left"
-          >
-            <span className="eyebrow hidden text-lago lg:block">Temporada 26/27</span>
-            <span className="text-base font-semibold lg:text-xl">Reservar clase</span>
-          </a>
         </div>
       </div>
     </section>

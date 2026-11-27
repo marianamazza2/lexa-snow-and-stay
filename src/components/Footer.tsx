@@ -14,17 +14,12 @@ export function Footer({ home = true }: { home?: boolean }) {
 
   return (
     <footer className="bg-pizarra text-nieve">
-      <div className="shell pb-[max(2rem,env(safe-area-inset-bottom))] pt-20 sm:pt-28">
-        {/* Frase de marca */}
-        <p className="max-w-[18ch] font-serif text-[clamp(2.25rem,5vw,4.5rem)] font-light leading-[1] tracking-[-0.025em]">
-          Tú solo vienes a disfrutar <em className="italic text-glaciar">de la nieve.</em>
-        </p>
-
-        <div className="mt-16 grid gap-12 border-t border-nieve/20 pt-12 sm:mt-20 lg:grid-cols-12 lg:gap-16">
+      <div className="shell pb-[max(2rem,env(safe-area-inset-bottom))] pt-16 sm:pt-20">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           {/* Marca */}
           <div className="lg:col-span-5">
             <a href={home ? '#inicio' : '/'} aria-label="Lexa Snow & Stay, inicio" className="inline-block">
-              <Logo />
+              <Logo className="h-24" />
             </a>
             <p className="mt-6 max-w-[36ch] text-nieve/75">
               Apartamentos y clases de esquí y snowboard en Sierra Nevada.

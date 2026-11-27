@@ -174,3 +174,23 @@ html.lenis, html.lenis body { height: auto; }
   color: var(--color-nieve);
   &:hover { border-color: var(--color-nieve); background: color-mix(in srgb, var(--color-nieve) 10%, transparent); }
 }
+
+/* Tailwind v4 quita la mano a los botones: la devolvemos a todo lo cliqueable */
+@layer base {
+  a[href],
+  button:not(:disabled),
+  [role='button'],
+  [type='button']:not(:disabled),
+  [type='submit']:not(:disabled),
+  [type='checkbox'],
+  [type='radio'],
+  label[for],
+  select,
+  summary {
+    cursor: pointer;
+  }
+  button:disabled,
+  [type='submit']:disabled {
+    cursor: not-allowed;
+  }
+}

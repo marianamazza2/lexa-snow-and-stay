@@ -1,15 +1,20 @@
+import type { CSSProperties } from 'react'
 import { cn } from '@/lib/cn'
 
-// Logotipo provisional en texto. Se sustituye por el SVG oficial cuando lo tengamos.
+// Logotipo oficial (public/logo-lexa.webp, fondo transparente).
+// Se pinta con una máscara CSS, así toma el color del texto (currentColor):
+// blanco sobre el hero y el footer, pizarra sobre la barra clara.
+const mask: CSSProperties = {
+  WebkitMaskImage: 'url(/logo-lexa.webp)',
+  maskImage: 'url(/logo-lexa.webp)',
+  WebkitMaskSize: 'contain',
+  maskSize: 'contain',
+  WebkitMaskRepeat: 'no-repeat',
+  maskRepeat: 'no-repeat',
+  WebkitMaskPosition: 'center',
+  maskPosition: 'center',
+}
+
 export function Logo({ className }: { className?: string }) {
-  return (
-    <span className={cn('flex flex-col items-center leading-none', className)}>
-      <span className="font-logo text-[1.6rem] tracking-[0.22em] pl-[0.22em]">LEXA</span>
-      <span className="mt-1 flex items-center gap-1.5 text-[0.5rem] font-medium tracking-[0.32em] uppercase">
-        <span aria-hidden className="h-px w-3 bg-current opacity-70" />
-        Snow and Stay
-        <span aria-hidden className="h-px w-3 bg-current opacity-70" />
-      </span>
-    </span>
-  )
+  return <span aria-hidden className={cn('block aspect-[800/484] h-14 bg-current', className)} style={mask} />
 }

@@ -1,7 +1,7 @@
 // Apartamentos de Lexa Snow & Stay.
 //
-// PROVISIONAL: nombres, textos, capacidades y fotos son de ejemplo para el diseño.
-// Las fotos son de Unsplash (licencia libre) y se sustituirán por las reales.
+// Textos y datos sacados de los dossieres de cada apartamento (noviembre 2026).
+// Fotos reales en public/images/<apartamento>, siempre en formato WebP.
 //
 // Para añadir un alojamiento nuevo basta con sumar un objeto a la lista.
 // Con `published: false` queda preparado pero no se muestra en la web.
@@ -9,154 +9,240 @@
 export type Apartment = {
   slug: string
   name: string
+  /** Edificio y zona: aparece junto al nombre en la ficha */
+  building: string
   tagline: string
   summary: string
   guests: number
-  bedrooms: number
-  bathrooms: number
-  highlights: string[]
+  /** Distribución y baños, p. ej. ['1 dormitorio', '1 baño'] */
+  layout: [string, string]
   /** Texto largo de la ficha, un párrafo por elemento */
   description: string[]
   /** Equipamiento: aparece en la lista «Lo que encontrarás» */
   amenities: string[]
   /** Dónde se duerme: una línea por estancia */
   beds: { room: string; detail: string }[]
+  /** Ubicación, parking, llegada…: aparece en «Bueno saber» */
+  info: { label: string; value: string }[]
+  /** Dirección para el enlace a Google Maps */
+  mapsQuery: string
   images: { src: string; alt: string }[]
   /** Enlace del botón «Reservar» de la ficha (Airbnb, Booking o el que corresponda) */
   reservaUrl: string
   published: boolean
 }
 
-const unsplash = (id: string, w = 1400) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`
-
 export const apartments: Apartment[] = [
   {
-    slug: 'veleta',
-    name: 'Veleta',
-    tagline: 'Luz y vistas a las cumbres',
+    slug: 'arttyfal',
+    name: 'Arttyfal',
+    building: 'Edificio Arttyfal · Sierra Nevada',
+    tagline: 'Estudio con vistas a la montaña',
     summary:
-      'Salón abierto con grandes ventanales y madera clara. Ideal para una pareja o una familia pequeña que quiere despertar mirando la montaña.',
+      'Un estudio acogedor para compartir días de nieve y descanso, con parking incluido, entrada autónoma y unas vistas increíbles hacia la montaña y hacia Granada.',
     guests: 4,
-    bedrooms: 2,
-    bathrooms: 1,
-    highlights: ['Vistas a la sierra', 'Cocina equipada', 'Wifi'],
+    layout: ['Estudio diáfano', '1 baño'],
     description: [
-      'Veleta es el apartamento de la luz. El salón se abre a la sierra con grandes ventanales y la madera clara hace que, incluso en los días grises, la casa se sienta cálida.',
-      'Tiene dos dormitorios independientes, cocina completa para no depender de restaurantes y un rincón junto a la ventana que es el mejor sitio para el café de la mañana.',
+      'Un estudio diáfano para hasta 4 personas, sin dormitorio independiente: una cama de matrimonio y dos camas individuales comparten el mismo espacio abierto, junto a la mesa para comer y los rincones para descansar.',
+      'La cocina tiene menaje para preparar tus comidas, el baño dispone de bañera con ducha y hay armario y zona de perchas para la ropa y los abrigos. Desayunos con calma, vistas que enamoran y un sitio cómodo al que volver después de esquiar.',
     ],
-    amenities: ['Vistas a la sierra', 'Cocina equipada', 'Wifi', 'Calefacción', 'Guardaesquís', 'Ropa de cama y toallas', 'Smart TV', 'Cafetera'],
+    amenities: [
+      'Parking incluido',
+      'Entrada autónoma',
+      'Vistas a la montaña',
+      'WiFi',
+      'Calefacción',
+      'Smart TV',
+      'Cocina con menaje',
+      'Sábanas y toallas incluidas',
+      'Bañera con ducha',
+      'Armario y zona de perchas',
+    ],
     beds: [
-      { room: 'Dormitorio 1', detail: '1 cama doble' },
-      { room: 'Dormitorio 2', detail: '2 camas individuales' },
+      { room: 'Espacio abierto', detail: '1 cama de matrimonio' },
+      { room: 'Espacio abierto', detail: '2 camas individuales' },
     ],
+    info: [
+      { label: 'Dirección', value: 'Calle de la Virgen de las Nieves, 35 · Edificio Arttyfal' },
+      { label: 'Telesilla', value: 'A unos 100 m de la parada intermedia del telesilla Parador I' },
+      { label: 'Plaza de Andalucía', value: 'A unos 10 minutos a pie, con pendientes' },
+      { label: 'Parking', value: 'Incluido en el precio' },
+      { label: 'Llegada', value: 'Entrada autónoma, con instrucciones antes de llegar' },
+      { label: 'Alrededores', value: 'Supermercados y restaurantes cerca' },
+    ],
+    mapsQuery: 'Calle de la Virgen de las Nieves 35, 18196 Sierra Nevada, Granada',
     images: [
-      { src: unsplash('1613914049786-b7e3e8323348'), alt: 'Salón de madera clara con ventanales y vistas a la montaña' },
-      { src: unsplash('1645640929991-867520dce42a'), alt: 'Dormitorio con paredes de madera y ropa de cama cálida' },
-      { src: unsplash('1738315452605-f3ff2d162631'), alt: 'Salón acogedor con vigas de madera y luz natural' },
-      { src: unsplash('1767348922879-a5cade5cceff'), alt: 'Salón cálido con tapiz de montaña y ventanas amplias' },
-      { src: unsplash('1736796310381-d5c82ce99826'), alt: 'Sofá y mesa baja en un salón luminoso' },
+      { src: '/images/arttyfal/01-estudio.webp', alt: 'Estudio con paredes de madera, camas y mesa junto a las ventanas' },
+      { src: '/images/arttyfal/02-camas.webp', alt: 'Cama individual con cojines y cama de matrimonio bajo las ventanas' },
+      { src: '/images/arttyfal/03-salon.webp', alt: 'Salón con mesa baja redonda, televisión y mesa de comedor' },
+      { src: '/images/arttyfal/04-dormitorio-salon.webp', alt: 'Cama doble, mesa de comedor y zona de televisión' },
+      { src: '/images/arttyfal/05-cocina.webp', alt: 'Cocina blanca con microondas, nevera y vitrocerámica' },
+      { src: '/images/arttyfal/06-mesa.webp', alt: 'Mesa de comedor puesta junto a la ventana' },
+      { src: '/images/arttyfal/07-bano.webp', alt: 'Baño con bañera, mampara y ventana' },
+      { src: '/images/arttyfal/08-lavabo.webp', alt: 'Lavabo con espejo redondo y toallas' },
+      { src: '/images/arttyfal/09-vistas.webp', alt: 'Vistas a un mar de nubes sobre el valle desde la terraza' },
+      { src: '/images/arttyfal/10-atardecer.webp', alt: 'Atardecer sobre el mar de nubes y los tejados nevados' },
+      { src: '/images/arttyfal/11-ventana.webp', alt: 'Ventana de madera con vistas al atardecer y una copa de vino' },
+      { src: '/images/arttyfal/12-detalle.webp', alt: 'Estante de madera con cuadro de montaña y decoración' },
+      { src: '/images/arttyfal/13-armario.webp', alt: 'Armario blanco con perchas y cómoda' },
+      { src: '/images/arttyfal/14-estante.webp', alt: 'Estante con tostadora y tazas sobre la pared de madera' },
     ],
     reservaUrl: '#', // TODO: enlace de reserva
     published: true,
   },
   {
-    slug: 'mulhacen',
-    name: 'Mulhacén',
-    tagline: 'El más amplio, para grupos',
+    slug: 'mountain-duplex',
+    name: 'Mountain Duplex',
+    building: 'Edificio América · Sierra Nevada',
+    tagline: 'Un dúplex con encanto, en dos plantas',
     summary:
-      'Espacioso y acogedor, con vigas de madera y una mesa grande para cenar todos juntos después de un día en pistas.',
-    guests: 6,
-    bedrooms: 3,
-    bathrooms: 2,
-    highlights: ['Comedor amplio', 'Guardaesquís', 'Calefacción central'],
+      'Un dúplex reformado que combina madera, tonos cálidos y espacios de doble altura, en el corazón de Sierra Nevada.',
+    guests: 5,
+    layout: ['Dos plantas', '1 baño y 1 aseo'],
     description: [
-      'Mulhacén es el más amplio de los cuatro, pensado para grupos y familias que quieren estar juntos sin estar encima unos de otros.',
-      'Las vigas de madera y la mesa de comedor grande marcan el ambiente: después de un día en pistas, aquí se cena con calma. Tres dormitorios y dos baños hacen que las mañanas sean fáciles.',
+      'Arriba, conectada por la escalera interior, está la zona de descanso: una cama de matrimonio, una cama individual, baño completo y Smart TV.',
+      'Abajo, el salón-comedor con cocina integrada, sofá cama doble, televisión de 65 pulgadas y aseo. Todo preparado para desayunar con calma antes de salir a la montaña y relajarte al volver de la nieve.',
     ],
-    amenities: ['Comedor para 6', 'Cocina equipada', 'Wifi', 'Calefacción central', 'Guardaesquís', 'Ropa de cama y toallas', 'Lavadora', 'Smart TV'],
+    amenities: [
+      'Dos plantas',
+      'Smart TV en el dormitorio',
+      'Televisión de 65"',
+      'Cocina equipada con menaje',
+      'Sábanas y toallas incluidas',
+      'WiFi',
+      'Agua caliente comunitaria',
+      'Baño completo y aseo',
+    ],
     beds: [
-      { room: 'Dormitorio 1', detail: '1 cama doble' },
-      { room: 'Dormitorio 2', detail: '1 cama doble' },
-      { room: 'Dormitorio 3', detail: '2 camas individuales' },
+      { room: 'Planta superior', detail: '1 cama de matrimonio y 1 cama individual' },
+      { room: 'Planta baja', detail: '1 sofá cama doble' },
     ],
+    info: [
+      { label: 'Dirección', value: 'Calle de la Virgen de las Nieves · Edificio América' },
+      { label: 'Telesilla', value: 'Zona media, cerca de la parada intermedia del telesilla Parador I' },
+      { label: 'Parking', value: 'Exterior, por orden de llegada y sin plaza garantizada. Parking privado cercano opcional: 25 € por noche, bajo reserva y según disponibilidad.' },
+      { label: 'Alrededores', value: 'Supermercados y restaurantes cerca' },
+    ],
+    mapsQuery: 'Edificio América, Calle de la Virgen de las Nieves, 18196 Sierra Nevada, Granada',
     images: [
-      { src: unsplash('1738315452605-f3ff2d162631'), alt: 'Salón acogedor con vigas de madera y luz natural' },
-      { src: unsplash('1761470427837-742a93e1a3bb'), alt: 'Comedor de madera con bancos y lámpara cálida' },
-      { src: unsplash('1645640929991-867520dce42a'), alt: 'Dormitorio con paredes de madera y ropa de cama cálida' },
-      { src: unsplash('1585803114088-cd027272106a'), alt: 'Salón con grandes ventanales y paisaje nevado' },
-      { src: unsplash('1721396187252-3450d33e9b6a'), alt: 'Salón con lámpara de araña y vistas a la sierra' },
+      { src: '/images/mountain-duplex/01-salon-altillo.webp', alt: 'Salón con sofá y cocina, con el dormitorio en el altillo y su escalera' },
+      { src: '/images/mountain-duplex/02-salon-cocina.webp', alt: 'Cocina con encimera de madera, sofá y televisión en un salón alargado' },
+      { src: '/images/mountain-duplex/03-cocina.webp', alt: 'Cocina blanca con vitrocerámica y cafetera junto al sofá' },
+      { src: '/images/mountain-duplex/04-comedor.webp', alt: 'Mesa de comedor con sillas negras y esquís decorativos en la pared' },
+      { src: '/images/mountain-duplex/05-escalera.webp', alt: 'Escalera de madera y metal que sube al altillo' },
+      { src: '/images/mountain-duplex/06-dormitorio.webp', alt: 'Dormitorio en el altillo con cama doble y cabecero de madera' },
+      { src: '/images/mountain-duplex/07-dormitorio-snowboard.webp', alt: 'Cama doble con lámpara de mimbre y una tabla de snowboard en la pared' },
+      { src: '/images/mountain-duplex/08-dormitorio-armario.webp', alt: 'Cama doble del altillo con armario de madera al fondo' },
     ],
     reservaUrl: '#', // TODO: enlace de reserva
     published: true,
   },
   {
-    slug: 'borreguiles',
-    name: 'Borreguiles',
-    tagline: 'Cálido y a un paso de todo',
+    slug: 'super-loft',
+    name: 'Super Loft',
+    building: 'Edificio Europa · Sierra Nevada',
+    tagline: 'Un loft amplio y recién reformado',
     summary:
-      'Un refugio cómodo y luminoso, pensado para descansar bien y salir a la nieve en pocos minutos.',
+      'Un loft amplio y recién reformado en el corazón de Sierra Nevada, para una escapada en pareja, en familia o con amigos.',
     guests: 4,
-    bedrooms: 1,
-    bathrooms: 1,
-    highlights: ['Cerca de los remontes', 'Sofá cama', 'Wifi'],
+    layout: ['Loft diáfano', '1 baño'],
     description: [
-      'Borreguiles es un refugio cómodo y luminoso, a pocos minutos a pie de los remontes. Ideal si lo que quieres es aprovechar al máximo los días de nieve.',
-      'Un dormitorio, un salón con sofá cama para dos personas más y todo lo necesario para cocinar y descansar bien.',
+      'Un espacio abierto que reúne la zona de descanso, el salón-comedor y la cocina. Tonos suaves, madera y una distribución amplia para compartir tu escapada a la montaña.',
+      'La cocina integrada tiene placa, microondas, frigorífico, lavavajillas y lavadora. El baño, reformado en tonos claros con detalles en negro y madera, cuenta con ducha con mampara, doble lavabo y espacio de almacenaje.',
     ],
-    amenities: ['Cerca de los remontes', 'Sofá cama', 'Cocina equipada', 'Wifi', 'Calefacción', 'Guardaesquís', 'Ropa de cama y toallas'],
+    amenities: [
+      'Cocina integrada',
+      'Microondas',
+      'Lavavajillas',
+      'Lavadora',
+      'Frigorífico',
+      'Televisión',
+      'Ducha con mampara',
+      'Doble lavabo',
+      'Agua caliente comunitaria',
+    ],
     beds: [
-      { room: 'Dormitorio', detail: '1 cama doble' },
+      { room: 'Zona de descanso', detail: '1 cama de matrimonio' },
       { room: 'Salón', detail: '1 sofá cama doble' },
     ],
+    info: [
+      { label: 'Dirección', value: 'Calle de la Virgen de las Nieves, 16 · Edificio Europa' },
+      { label: 'Telesilla', value: 'A unos 150 m del telesilla Parador I' },
+      { label: 'Parking', value: 'Exterior, por orden de llegada y sin plaza garantizada. Parking privado cercano opcional: 25 € por noche, bajo reserva y según disponibilidad.' },
+      { label: 'Alrededores', value: 'Junto a restaurantes y supermercados' },
+    ],
+    mapsQuery: 'Calle de la Virgen de las Nieves 16, 18196 Sierra Nevada, Granada',
     images: [
-      { src: unsplash('1585803114088-cd027272106a'), alt: 'Salón con grandes ventanales y paisaje nevado' },
-      { src: unsplash('1767348922879-a5cade5cceff'), alt: 'Salón cálido con tapiz de montaña y ventanas amplias' },
-      { src: unsplash('1645640929991-867520dce42a'), alt: 'Dormitorio con paredes de madera y ropa de cama cálida' },
-      { src: unsplash('1761470427837-742a93e1a3bb'), alt: 'Comedor de madera con bancos y lámpara cálida' },
-      { src: unsplash('1613914049786-b7e3e8323348'), alt: 'Salón de madera clara con ventanales y vistas a la montaña' },
+      { src: '/images/super-loft/01-salon-cocina.webp', alt: 'Salón diáfano con sofá, mesa de comedor y cocina junto a los ventanales' },
+      { src: '/images/super-loft/02-sofa-dormitorio.webp', alt: 'Sofá chaise longue beige con la zona de dormir y la cocina al fondo' },
+      { src: '/images/super-loft/03-cocina.webp', alt: 'Cocina en gris y madera con lavadora, lavavajillas y nevera' },
+      { src: '/images/super-loft/04-mesa-alta.webp', alt: 'Mesa alta de madera con taburetes junto a la ventana' },
+      { src: '/images/super-loft/05-tv.webp', alt: 'Mueble de madera con televisión de pantalla plana' },
+      { src: '/images/super-loft/06-lavabo.webp', alt: 'Baño de mármol blanco con lavabo, espejo y estantería' },
+      { src: '/images/super-loft/07-ducha.webp', alt: 'Baño con ducha de mampara e inodoro suspendido' },
     ],
     reservaUrl: '#', // TODO: enlace de reserva
     published: true,
   },
   {
-    slug: 'alcazaba',
-    name: 'Alcazaba',
-    tagline: 'Íntimo, para dos',
+    slug: 'arttyco',
+    name: 'Arttyco',
+    building: 'Edificio Arttyco · Sierra Nevada',
+    tagline: 'A dos pasos del telesilla Parador I',
     summary:
-      'Pequeño, cuidado al detalle y muy tranquilo. Perfecto para una escapada en pareja con la nieve como telón de fondo.',
-    guests: 2,
-    bedrooms: 1,
-    bathrooms: 1,
-    highlights: ['Ideal parejas', 'Terraza', 'Cocina equipada'],
+      'Tu escapada a la nieve en un apartamento recién reformado, con garaje incluido y zona spa en el edificio.',
+    guests: 5,
+    layout: ['1 dormitorio', '1 baño'],
     description: [
-      'Alcazaba es pequeño, cuidado al detalle y muy tranquilo. Pensado para dos, para una escapada en pareja con la nieve como telón de fondo.',
-      'Tiene una terraza para mirar la sierra al atardecer y una cocina equipada para quedarse en casa cuando apetece.',
+      'Un apartamento recién reformado con dormitorio independiente y cama de matrimonio. El salón-comedor tiene sofá cama y dos camas individuales en litera, con capacidad para 5 personas.',
+      'La cocina dispone de microondas, frigorífico y placa para preparar el desayuno antes de salir a la nieve, y el baño reformado tiene ducha con mampara. Para completar la escapada, el edificio cuenta con zona spa con piscina climatizada, sauna y jacuzzi.',
     ],
-    amenities: ['Ideal parejas', 'Terraza', 'Cocina equipada', 'Wifi', 'Calefacción', 'Ropa de cama y toallas', 'Cafetera'],
+    amenities: [
+      'Garaje incluido',
+      'Cocina equipada',
+      'Microondas',
+      'Frigorífico',
+      'Baño con ducha y mampara',
+      'Sábanas y toallas incluidas',
+      'Spa en el edificio (opcional)',
+    ],
     beds: [
-      { room: 'Dormitorio', detail: '1 cama doble' },
+      { room: 'Dormitorio', detail: '1 cama de matrimonio' },
+      { room: 'Salón-comedor', detail: '1 sofá cama' },
+      { room: 'Salón-comedor', detail: '2 camas individuales en litera' },
     ],
+    info: [
+      { label: 'Dirección', value: 'Calle de la Virgen de las Nieves, 3 · Edificio Arttyco' },
+      { label: 'Telesilla', value: 'A pocos pasos de la parada intermedia del telesilla Parador I' },
+      { label: 'Garaje', value: 'Plaza incluida en el precio' },
+      { label: 'Spa', value: 'Piscina climatizada, sauna y jacuzzi: 5 € por persona y día, bajo reserva y pago previo' },
+      { label: 'Alrededores', value: 'Supermercados, restaurantes y alquiler de material' },
+    ],
+    mapsQuery: 'Calle de la Virgen de las Nieves 3, 18196 Sierra Nevada, Granada',
     images: [
-      { src: unsplash('1721396187252-3450d33e9b6a'), alt: 'Salón con lámpara de araña y vistas a la sierra' },
-      { src: unsplash('1736796310381-d5c82ce99826'), alt: 'Sofá y mesa baja en un salón luminoso' },
-      { src: unsplash('1645640929991-867520dce42a'), alt: 'Dormitorio con paredes de madera y ropa de cama cálida' },
-      { src: unsplash('1585803114088-cd027272106a'), alt: 'Salón con grandes ventanales y paisaje nevado' },
-      { src: unsplash('1738315452605-f3ff2d162631'), alt: 'Salón acogedor con vigas de madera y luz natural' },
+      { src: '/images/arttyco/01-salon.webp', alt: 'Salón con sofá gris, mesa baja blanca y cortinas oscuras' },
+      { src: '/images/arttyco/02-salon-cocina.webp', alt: 'Salón abierto a la cocina blanca con microondas' },
+      { src: '/images/arttyco/03-estudio.webp', alt: 'Vista del estudio completo con litera abatible, cama y cocina' },
+      { src: '/images/arttyco/04-litera-salon.webp', alt: 'Litera abatible junto al sofá del salón' },
+      { src: '/images/arttyco/05-cocina.webp', alt: 'Cocina blanca con mesa abatible y taburetes' },
+      { src: '/images/arttyco/06-dormitorio.webp', alt: 'Dormitorio con cama doble y armario de madera' },
+      { src: '/images/arttyco/07-dormitorio-ventana.webp', alt: 'Dormitorio con cama doble junto a la ventana' },
+      { src: '/images/arttyco/08-litera-cama.webp', alt: 'Litera abatible y sofá cama preparados para dormir' },
+      { src: '/images/arttyco/09-sofa-cama.webp', alt: 'Sofá cama abierto con cojines' },
+      { src: '/images/arttyco/10-bano.webp', alt: 'Baño con azulejos blancos, lavabo de madera y espejo redondo' },
+      { src: '/images/arttyco/11-ducha.webp', alt: 'Ducha con mampara y toallero negro' },
+      { src: '/images/arttyco/12-piscina.webp', alt: 'Piscina climatizada y jacuzzi del edificio' },
+      { src: '/images/arttyco/13-edificio.webp', alt: 'Fachada del edificio con nieve' },
+      { src: '/images/arttyco/14-vistas.webp', alt: 'Vistas al atardecer con la montaña nevada al fondo' },
     ],
     reservaUrl: '#', // TODO: enlace de reserva
     published: true,
   },
-]
-
-// Información práctica común a todos los apartamentos. PROVISIONAL: confirmar con la clienta.
-export const stayInfo = [
-  { label: 'Entrada', value: 'A partir de las 16:00' },
-  { label: 'Salida', value: 'Hasta las 11:00' },
-  { label: 'Ubicación', value: 'Pradollano, Sierra Nevada' },
-  { label: 'Normas', value: 'No se permite fumar ni hacer fiestas' },
 ]
 
 export const publishedApartments = apartments.filter((a) => a.published)
 
 export const getApartment = (slug: string) => publishedApartments.find((a) => a.slug === slug)
+
+export const mapsUrl = (a: Apartment) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a.mapsQuery)}`

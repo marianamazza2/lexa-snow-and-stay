@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { Link, createFileRoute, notFound } from '@tanstack/react-router'
-import { getApartment, publishedApartments, stayInfo } from '@/content/apartments'
+import { getApartment, mapsUrl, publishedApartments } from '@/content/apartments'
 import { classesCta } from '@/content/classes'
 import { site } from '@/content/site'
 import { Navbar } from '@/components/Navbar'
@@ -33,15 +33,13 @@ export const Route = createFileRoute('/apartamentos/$slug')({
   component: ApartmentPage,
 })
 
-const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`
-
 function ApartmentPage() {
   const apt = Route.useLoaderData()
   const others = publishedApartments.filter((a) => a.slug !== apt.slug).slice(0, 3)
   const specs = [
     { icon: UsersIcon, label: `Hasta ${apt.guests} personas` },
-    { icon: BedIcon, label: plural(apt.bedrooms, 'dormitorio', 'dormitorios') },
-    { icon: BathIcon, label: plural(apt.bathrooms, 'baño', 'baños') },
+    { icon: BedIcon, label: apt.layout[0] },
+    { icon: BathIcon, label: apt.layout[1] },
   ]
 
   return (
@@ -72,7 +70,7 @@ function ApartmentPage() {
               <ul className="flex flex-wrap gap-x-7 gap-y-3 text-pizarra">
                 <li className="flex items-center gap-2.5">
                   <PinIcon className="text-lago" />
-                  Pradollano, Sierra Nevada
+                  {apt.building}
                 </li>
                 {specs.map((s) => (
                   <li key={s.label} className="flex items-center gap-2.5">
@@ -114,8 +112,8 @@ function ApartmentPage() {
 
             <Block title="Dónde dormirás">
               <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {apt.beds.map((b) => (
-                  <li key={b.room} className="rounded-2xl border border-escarcha p-5">
+                {apt.beds.map((b, i) => (
+                  <li key={i} className="rounded-2xl border border-escarcha p-5">
                     <BedIcon width={26} height={26} className="text-lago" />
                     <p className="mt-4 font-semibold text-pizarra">{b.room}</p>
                     <p className="mt-1 text-sm text-piedra">{b.detail}</p>
@@ -126,13 +124,17 @@ function ApartmentPage() {
 
             <Block title="Bueno saber">
               <dl className="grid gap-x-10 sm:grid-cols-2">
-                {stayInfo.map((s) => (
+                {apt.info.map((s) => (
                   <div key={s.label} className="border-b border-escarcha py-4">
                     <dt className="eyebrow text-piedra">{s.label}</dt>
                     <dd className="mt-1.5 text-pizarra">{s.value}</dd>
                   </div>
                 ))}
               </dl>
+              <a href={mapsUrl(apt)} target="_blank" rel="noreferrer" className="btn btn-outline mt-8">
+                <PinIcon width={18} height={18} />
+                Ver en Google Maps
+              </a>
             </Block>
           </div>
 

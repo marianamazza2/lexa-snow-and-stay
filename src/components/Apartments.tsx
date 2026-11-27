@@ -66,10 +66,7 @@ export function Apartments() {
 
 export function ApartmentCard({ apt, className }: { apt: Apartment; className?: string }) {
   const [cover, second] = apt.images
-  const rooms = [
-    `${apt.bedrooms} ${apt.bedrooms === 1 ? 'dormitorio' : 'dormitorios'}`,
-    `${apt.bathrooms} ${apt.bathrooms === 1 ? 'baño' : 'baños'}`,
-  ]
+  const rooms = apt.layout
 
   return (
     <Link
@@ -96,15 +93,14 @@ export function ApartmentCard({ apt, className }: { apt: Apartment; className?: 
           className="absolute inset-0 size-full scale-[1.04] object-cover opacity-0 transition-[opacity,transform] duration-[1000ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-100 group-hover:opacity-100"
         />
       )}
-      {/* Velo en azul de la marca para leer el texto */}
+      {/* Velo oscuro neutro desde abajo, para leer el texto */}
       <div
         aria-hidden
-        className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[#244861]/90 via-[#244861]/45 to-transparent"
+        className="absolute inset-0 bg-[linear-gradient(0deg,rgba(17,19,22,0.85)_0%,rgba(17,19,22,0.72)_32%,rgba(17,19,22,0.48)_58%,rgba(17,19,22,0.18)_80%,rgba(17,19,22,0)_96%)]"
       />
 
-      <div className="absolute inset-x-0 bottom-0 flex flex-wrap items-end justify-between gap-x-6 gap-y-4 p-6 sm:p-8">
+      <div className="absolute inset-x-0 bottom-0 flex flex-col items-start gap-5 p-6 sm:p-8">
         <div className="flex flex-col gap-2.5">
-          <span className="eyebrow">{apt.tagline}</span>
           <h3 className="font-serif text-[clamp(2.25rem,3.8vw,3.5rem)] font-normal leading-[0.95]">{apt.name}</h3>
           <p className="text-sm">
             {rooms.join(' · ')} · Hasta {apt.guests} personas

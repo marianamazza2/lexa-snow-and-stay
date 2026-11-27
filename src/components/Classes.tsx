@@ -73,8 +73,8 @@ export function Classes() {
         <ul className="mt-20 grid gap-14 lg:mt-24 lg:grid-cols-2 lg:gap-x-14">
           {classModes.map((mode, i) => (
             <Reveal key={mode.id} as="li" delay={(i % 2) * 0.1} y={24}>
-              <article className="group grid gap-6 border-b border-crema/20 pb-14 sm:grid-cols-[minmax(0,240px)_1fr] sm:gap-9 xl:grid-cols-[260px_1fr]">
-                <div className="relative isolate aspect-[4/3] overflow-hidden rounded-media bg-lino/20 sm:aspect-[3/4]">
+              <article className="group grid gap-6 border-b border-crema/20 pb-14 sm:grid-cols-[minmax(0,240px)_minmax(0,1fr)] sm:gap-9 lg:grid-cols-1 xl:grid-cols-[260px_minmax(0,1fr)]">
+                <div className="relative isolate aspect-[4/3] overflow-hidden rounded-media bg-lino/20 sm:aspect-[3/4] lg:aspect-[4/3] xl:aspect-[3/4]">
                   <img
                     src={mode.image}
                     alt={mode.imageAlt}
@@ -82,11 +82,11 @@ export function Classes() {
                     className="absolute inset-0 size-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
                   />
                 </div>
-                <div className="flex flex-col">
+                <div className="flex min-w-0 flex-col">
                   <span className="eyebrow text-glaciar">
                     {mode.discipline} · {mode.level}
                   </span>
-                  <h3 className="mt-3 font-serif text-[clamp(2rem,2.8vw,2.5rem)] font-normal leading-[1.05]">
+                  <h3 className="mt-3 font-serif text-[clamp(1.6rem,2vw,2.5rem)] font-normal leading-[1.05] break-words">
                     {mode.title}
                   </h3>
                   <p className="mt-3.5 leading-relaxed text-crema">
